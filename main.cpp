@@ -94,6 +94,7 @@ void mainProcessing(string filePath, ifstream* artFile, ofstream* cppAsciiFile,b
             artFile->open(filePath); // opens the ascii art file
             cout << "Opened File Path" << endl; ///
             string artLine; //formerly testLine
+            string outputType = "cout";//default output type
 
             if(artFile->is_open()){
 
@@ -103,12 +104,24 @@ void mainProcessing(string filePath, ifstream* artFile, ofstream* cppAsciiFile,b
                 artFile->seekg(0);
                 }
 
+
+                cout << "would you like to replace cout ? (y/n)\n <->>>";
+                char response;
+                string replacement;
+                cin >> response;
+                if(response == 'y'){
+                    cout << "What would you like to replace cout with ? \n<->>>";
+                    cin >> replacement;
+                    outputType = replacement;
+                }
+                //take input to replace cout
+                //assign the cout type a variable
                 cppAsciiFile->open("asciiCpp.txt");
                 cout << "Creating & Opening asciiCpp.txt file " << endl;
                 if(cppAsciiFile->is_open()){
                         while(getline(*artFile,artLine)){
 
-                                *cppAsciiFile << "cout << " << '"';
+                                *cppAsciiFile << outputType << " << " << '"';
 
                             for(char c : artLine){
                                 if(c == '"' || c == '\\'){
